@@ -2,17 +2,6 @@
 jQuery(document).ready(function($) {
   "use strict";
 
-
-  //add some elements with animate effect
-
-  $(".big-cta").hover(
-    function() {
-      $('.cta a').addClass("animated shake");
-    },
-    function() {
-      $('.cta a').removeClass("animated shake");
-    }
-  );
   $(".box").hover(
     function() {
       $(this).find('.icon').addClass("animated fadeInDown");
@@ -109,51 +98,6 @@ jQuery(document).ready(function($) {
   // tooltip
   $('.social-network li a, .options_box .color a').tooltip();
 
-
-  //stats
-  jQuery('.appear').appear();
-  var runOnce = true;
-  jQuery(".stats").on("appear", function(data) {
-    var counters = {};
-    var i = 0;
-    if (runOnce) {
-      jQuery('.number').each(function() {
-        counters[this.id] = $(this).html();
-        i++;
-      });
-      jQuery.each(counters, function(i, val) {
-        //console.log(i + ' - ' +val);
-        jQuery({
-          countNum: 0
-        }).animate({
-          countNum: val
-        }, {
-          duration: 3000,
-          easing: 'linear',
-          step: function() {
-            jQuery('#' + i).text(Math.floor(this.countNum));
-          }
-        });
-      });
-      runOnce = false;
-    }
-  });
-
-  //parallax
-  if ($('.parallax').length) {
-    $(window).stellar({
-      responsive: true,
-      scrollProperty: 'scroll',
-      parallaxElements: false,
-      horizontalScrolling: false,
-      horizontalOffset: 0,
-      verticalOffset: 0
-    });
-
-  }
-
-
-
   //scroll to top
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
@@ -168,77 +112,6 @@ jQuery(document).ready(function($) {
     }, 1000);
     return false;
   });
-
-
-
-
-  //search
-  if( $('#sb-search').length ) {
-    new UISearch(document.getElementById('sb-search'));
-  }
-
-  //cube portfolio
-  var gridContainer = $('#grid-container'),
-    filtersContainer = $('#filters-container');
-
-  // init cubeportfolio
-  gridContainer.cubeportfolio({
-
-    defaultFilter: '*',
-
-    animationType: 'flipOutDelay',
-
-    gapHorizontal: 45,
-
-    gapVertical: 30,
-
-    gridAdjustment: 'responsive',
-
-    caption: 'overlayBottomReveal',
-
-    displayType: 'lazyLoading',
-
-    displayTypeSpeed: 100,
-
-    // lightbox
-    lightboxDelegate: '.cbp-lightbox',
-    lightboxGallery: true,
-    lightboxTitleSrc: 'data-title',
-    lightboxShowCounter: true
-
-  });
-
-  // add listener for filters click
-  filtersContainer.on('click', '.cbp-filter-item', function(e) {
-
-    var me = $(this),
-      wrap;
-
-    // get cubeportfolio data and check if is still animating (reposition) the items.
-    if (!$.data(gridContainer[0], 'cubeportfolio').isAnimating) {
-
-      if (filtersContainer.hasClass('cbp-l-filters-dropdown')) {
-        wrap = $('.cbp-l-filters-dropdownWrap');
-
-        wrap.find('.cbp-filter-item').removeClass('cbp-filter-item-active');
-
-        wrap.find('.cbp-l-filters-dropdownHeader').text(me.text());
-
-        me.addClass('cbp-filter-item-active');
-      } else {
-        me.addClass('cbp-filter-item-active').siblings().removeClass('cbp-filter-item-active');
-      }
-
-    }
-
-    // filter the items
-    gridContainer.cubeportfolio('filter', me.data('filter'), function() {});
-
-  });
-
-  // activate counters
-  gridContainer.cubeportfolio('showCounter', filtersContainer.find('.cbp-filter-item'));
-
 
   // add listener for load more click
   $('.cbp-l-loadMore-button-link').on('click', function(e) {
